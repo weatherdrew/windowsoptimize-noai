@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿#Requires -RunAsAdministrator
+#Requires -RunAsAdministrator
 # Windows 11 Optimization Script v3.1
 # Targets 24H2 (Build 26100) and 25H2 (Build 26200) - September 2026
 # AMD and NVIDIA GPU compatible
@@ -42,14 +42,14 @@ $catDesc = @{
           'Game Pass cloud features will not function.'
 
     '3' = 'Comprehensive privacy lockdown: zeroes telemetry to minimum, kills ad tracking and ' +
-          'tailored experiences, blocks background microphone/camera/screen capture access for ' +
-          'Store apps, disables cloud backup sync and Find My Device, kills Edge background ' +
-          'processes and startup boost, disables Remote Assistance, WiFi auto-connect, and ' +
-          'removes lock screen ads, Spotlight, and Start menu suggestions. ' +
-          'Tradeoffs: Store/UWP apps that need mic or camera will require you to manually ' +
-          'grant permission when first used. Find My Device will not be able to locate your ' +
-          'PC if lost or stolen. Remote Assistance sessions (someone helping you remotely) ' +
-          'will be blocked. Cloud settings sync across devices will stop.'
+          'tailored experiences, blocks background screen capture access for Store apps, ' +
+          'disables cloud backup sync and Find My Device, kills Edge background processes ' +
+          'and startup boost, disables Remote Assistance, WiFi auto-connect, and removes ' +
+          'lock screen ads, Spotlight, and Start menu suggestions. Microphone and camera ' +
+          'permissions are left user-controllable through Settings. ' +
+          'Tradeoffs: Find My Device will not be able to locate your PC if lost or stolen. ' +
+          'Remote Assistance sessions (someone helping you remotely) will be blocked. Cloud ' +
+          'settings sync across devices will stop.'
 
     '4' = 'Uninstalls 25+ preinstalled apps including Bing apps, Clipchamp, Teams, and Outlook. ' +
           'Removes all Xbox overlay and identity packages that hook into games. Fully removes ' +
@@ -303,9 +303,7 @@ function Invoke-PrivacyLockdown {
     Set-RegistryValue 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent' 'DisableThirdPartySuggestions' 1
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'SubscribedContent-338387Enabled' 0
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' 'Start_IrisRecommendations' 0
-    # Hardware access lockdown
-    Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy' 'LetAppsAccessMicrophone' 2
-    Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy' 'LetAppsAccessCamera' 2
+    # Hardware access lockdown (screen capture only - mic/camera left user-controllable)
     Set-RegistryValue 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\graphicsCaptureProgrammatic' 'Value' 'Deny' 'String'
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\graphicsCaptureProgrammatic' 'Value' 'Deny' 'String'
     Set-RegistryValue 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\graphicsCaptureWithoutBorder' 'Value' 'Deny' 'String'
