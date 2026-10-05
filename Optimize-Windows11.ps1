@@ -22,7 +22,7 @@ $cDkBlue  = $e + '[38;5;18m'
 $cBold    = $e + '[1m'
 $cReset   = $e + '[0m'
 
-# ── Category Descriptions ────────────────────────────────────────────────────
+# -- Category Descriptions ----------------------------------------------------
 $catDesc = @{
     '1' = 'Removes all Microsoft AI and Copilot components including app packages, ' +
           'Recall snapshots, Click to Do, Input Insights, and AI image generation in ' +
@@ -87,7 +87,7 @@ $catDesc = @{
           'this category.'
 }
 
-# ── Helper Functions ─────────────────────────────────────────────────────────
+# -- Helper Functions ---------------------------------------------------------
 function Write-Log {
     param([string]$Message, [string]$Level = 'INFO')
     $entry = (Get-Date -Format 'yyyy-MM-dd HH:mm:ss') + ' [' + $Level + '] ' + $Message
@@ -160,9 +160,9 @@ function Remove-AppxSafe {
 function Show-CategoryInfo {
     param([string]$Key, [string]$Title)
     Write-Host ''
-    Write-Host ($cDkGrey + '  ──────────────────────────────────────────────────────' + $cReset)
+    Write-Host ($cDkGrey + '  ------------------------------------------------------' + $cReset)
     Write-Host ($cOrange + '  ' + $cBold + $Title + $cReset)
-    Write-Host ($cDkGrey + '  ──────────────────────────────────────────────────────' + $cReset)
+    Write-Host ($cDkGrey + '  ------------------------------------------------------' + $cReset)
     Write-Host ''
     # Word-wrap description to ~70 chars
     $desc = $catDesc[$Key]
@@ -181,20 +181,20 @@ function Show-CategoryInfo {
     Write-Host ''
 }
 
-# ── Banner ───────────────────────────────────────────────────────────────────
+# -- Banner -------------------------------------------------------------------
 function Show-Banner {
     Clear-Host
     Write-Host ''
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█████████████████████████████████████████████████████' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '                                                   ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '   ' + $cLtBlue + '▄███▄' + $cReset + ' ' + $cOrange + '▄███▄' + $cReset + '                                    ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '   ' + $cLtBlue + '█████' + $cReset + ' ' + $cOrange + '█████' + $cReset + '   ' + $cWhite + $cBold + 'W I N O P T' + $cReset + '                  ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '   ' + $cLtBlue + '▀███▀' + $cReset + ' ' + $cOrange + '▀███▀' + $cReset + '   ' + $cGrey + 'Windows 11 Optimizer' + $cReset + '           ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '   ' + $cYellow + '▄███▄' + $cReset + ' ' + $cRed + '▄███▄' + $cReset + '                                    ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '   ' + $cYellow + '█████' + $cReset + ' ' + $cRed + '█████' + $cReset + '   ' + $cOrange + 'v3.1' + $cReset + $cDkGrey + ' | ' + $cGrey + '24H2/25H2' + $cDkGrey + ' | ' + $cGrey + 'Sept 2026' + $cReset + '  ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '   ' + $cYellow + '▀███▀' + $cReset + ' ' + $cRed + '▀███▀' + $cReset + '   ' + $cDkGrey + 'AMD + NVIDIA Compatible' + $cReset + '         ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '                                                   ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█████████████████████████████████████████████████████' + $cDkBlue + '▓▒░' + $cReset)
+    Write-Host ($cBlue + '  +=========================================================+' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '                                                         ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '   ' + $cLtBlue + '####' + $cReset + '  ' + $cOrange + '####' + $cReset + '                                        ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '   ' + $cLtBlue + '####' + $cReset + '  ' + $cOrange + '####' + $cReset + '   ' + $cWhite + $cBold + 'W I N O P T' + $cReset + '                      ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '                    ' + $cGrey + 'Windows 11 Optimizer' + $cReset + '               ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '   ' + $cYellow + '####' + $cReset + '  ' + $cRed + '####' + $cReset + '                                        ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '   ' + $cYellow + '####' + $cReset + '  ' + $cRed + '####' + $cReset + '   ' + $cOrange + 'v3.1' + $cReset + $cDkGrey + ' | ' + $cGrey + '24H2/25H2' + $cDkGrey + ' | ' + $cGrey + 'Oct 2026' + $cReset + '   ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '                    ' + $cDkGrey + 'AMD + NVIDIA Compatible' + $cReset + '            ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '                                                         ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  +=========================================================+' + $cReset)
     Write-Host ''
 }
 
@@ -203,7 +203,7 @@ function Show-Banner {
 # ============================================================================
 function Invoke-RemoveAICopilot {
     Write-Host ''
-    Write-Host ($cOrange + '  ■ ' + $cWhite + $cBold + 'Executing: Remove AI / Copilot' + $cReset)
+    Write-Host ($cOrange + '  >> ' + $cWhite + $cBold + 'Executing: Remove AI / Copilot' + $cReset)
     Remove-AppxSafe '*Microsoft.Copilot*'
     Remove-AppxSafe '*Microsoft.Windows.Ai*'
     Remove-AppxSafe '*MicrosoftWindows.Client.AIX*'
@@ -243,7 +243,7 @@ function Invoke-RemoveAICopilot {
 # ============================================================================
 function Invoke-DisableServices {
     Write-Host ''
-    Write-Host ($cOrange + '  ■ ' + $cWhite + $cBold + 'Executing: Disable Unnecessary Services' + $cReset)
+    Write-Host ($cOrange + '  >> ' + $cWhite + $cBold + 'Executing: Disable Unnecessary Services' + $cReset)
     Disable-ServiceSafe 'DiagTrack'            'Connected User Experiences and Telemetry'
     Disable-ServiceSafe 'dmwappushservice'      'WAP Push Message Routing'
     Disable-ServiceSafe 'diagnosticshub.standardcollector.service' 'Diagnostics Hub'
@@ -273,7 +273,7 @@ function Invoke-DisableServices {
 # ============================================================================
 function Invoke-PrivacyLockdown {
     Write-Host ''
-    Write-Host ($cOrange + '  ■ ' + $cWhite + $cBold + 'Executing: Privacy and Lockdown' + $cReset)
+    Write-Host ($cOrange + '  >> ' + $cWhite + $cBold + 'Executing: Privacy and Lockdown' + $cReset)
     # Telemetry
     Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection' 'AllowTelemetry' 0
     Set-RegistryValue 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection' 'AllowTelemetry' 0
@@ -351,7 +351,7 @@ function Invoke-PrivacyLockdown {
 # ============================================================================
 function Invoke-RemoveBloatware {
     Write-Host ''
-    Write-Host ($cOrange + '  ■ ' + $cWhite + $cBold + 'Executing: Bloatware and OneDrive Removal' + $cReset)
+    Write-Host ($cOrange + '  >> ' + $cWhite + $cBold + 'Executing: Bloatware and OneDrive Removal' + $cReset)
     $bloatApps = @(
         '*Microsoft.BingNews*'
         '*Microsoft.BingWeather*'
@@ -436,7 +436,7 @@ function Invoke-RemoveBloatware {
 # ============================================================================
 function Invoke-PerformanceUpdates {
     Write-Host ''
-    Write-Host ($cOrange + '  ■ ' + $cWhite + $cBold + 'Executing: Performance and Update Control' + $cReset)
+    Write-Host ($cOrange + '  >> ' + $cWhite + $cBold + 'Executing: Performance and Update Control' + $cReset)
     # Boot
     bcdedit /timeout 3 | Out-Null
     Write-Log 'Boot timeout set to 3 seconds' 'SUCCESS'
@@ -564,7 +564,7 @@ function Invoke-PerformanceUpdates {
 # ============================================================================
 function Invoke-SecurityHardening {
     Write-Host ''
-    Write-Host ($cOrange + '  ■ ' + $cWhite + $cBold + 'Executing: Security Hardening' + $cReset)
+    Write-Host ($cOrange + '  >> ' + $cWhite + $cBold + 'Executing: Security Hardening' + $cReset)
     # SMBv1
     Write-Log 'Removing SMBv1 protocol...' 'INFO'
     dism /online /Disable-Feature /FeatureName:'SMB1Protocol' /NoRestart 2>&1 | Out-Null
@@ -663,12 +663,12 @@ function Invoke-Main {
     }
     # Disclaimer
     Write-Host ''
-    Write-Host ($cDkGrey + '  ──────────────────────────────────────────────────────' + $cReset)
+    Write-Host ($cDkGrey + '  ------------------------------------------------------' + $cReset)
     Write-Host ($cYellow + '  CAUTION: ' + $cGrey + 'This script modifies Windows system settings,' + $cReset)
     Write-Host ($cGrey + '  services, and registry values. Changes are applied at your' + $cReset)
     Write-Host ($cGrey + '  own risk. A system restore point is recommended before' + $cReset)
     Write-Host ($cGrey + '  proceeding. Not all changes may suit every configuration.' + $cReset)
-    Write-Host ($cDkGrey + '  ──────────────────────────────────────────────────────' + $cReset)
+    Write-Host ($cDkGrey + '  ------------------------------------------------------' + $cReset)
     Write-Host ''
     $proceed = Read-Host -Prompt '  Proceed with the above changes? Y or N'
     if ($proceed -ne 'Y' -and $proceed -ne 'y') {
@@ -700,11 +700,11 @@ function Invoke-Main {
     }
     # Summary
     Write-Host ''
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█████████████████████████████████████████████████████' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '                                                   ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + $cGreen + $cBold + '        ✓  O P T I M I Z A T I O N   D O N E        ' + $cReset + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█' + $cReset + '                                                   ' + $cBlue + '█' + $cDkBlue + '▓▒░' + $cReset)
-    Write-Host ($cDkBlue + '  ░▒▓' + $cBlue + '█████████████████████████████████████████████████████' + $cDkBlue + '▓▒░' + $cReset)
+    Write-Host ($cBlue + '  +=========================================================+' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '                                                         ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + $cGreen + $cBold + '          *  O P T I M I Z A T I O N   D O N E          ' + $cReset + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '                                                         ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  +=========================================================+' + $cReset)
     Write-Host ''
     Write-Host ($cGrey + '  Log: ' + $cWhite + $LogFile + $cReset)
     Write-Host ($cYellow + '  A restart is recommended to apply all changes.' + $cReset)
