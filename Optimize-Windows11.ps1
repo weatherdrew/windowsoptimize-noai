@@ -296,6 +296,12 @@ function Invoke-PrivacyLockdown {
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy' 'TailoredExperiencesWithDiagnosticDataEnabled' 0
     # ARSO
     Set-RegistryValue 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' 'DisableAutomaticRestartSignOn' 1
+    # Suppress post-update nag screens (backup, Microsoft account, finish setup)
+    Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent' 'DisableWindowsConsumerFeatures' 1
+    Set-RegistryValue 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE' 'DisablePrivacyExperience' 1
+    Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\OOBE' 'DisablePrivacyExperience' 1
+    Write-Log 'Post-update nag screens suppressed' 'SUCCESS'
+
     # Spotlight and lock screen ads
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'RotatingLockScreenEnabled' 0
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'RotatingLockScreenOverlayEnabled' 0
@@ -438,6 +444,10 @@ function Invoke-PerformanceUpdates {
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Serialize' 'StartupDelayInMSec' 0
     Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent' 'DisableSoftLanding' 1
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement' 'ScoobeSystemSettingEnabled' 0
+    # Always show all system tray icons (no overflow arrow)
+    Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer' 'EnableAutoTray' 0
+    Write-Log 'System tray set to show all icons' 'SUCCESS'
+
     # Memory
     Disable-ServiceSafe 'SysMain'              'SysMain / Superfetch'
     dism /online /Set-ReservedStorageState /State:Disabled 2>$null
