@@ -1,6 +1,6 @@
 #Requires -RunAsAdministrator
-# Windows 11 Optimization Script v3.1
-# Targets 24H2 (Build 26100) and 25H2 (Build 26200) - September 2026
+# Windows 11 Optimization Script v3.2
+# Targets 24H2 (Build 26100), 25H2 (Build 26200), 26H2 - October 2026
 # AMD and NVIDIA GPU compatible
 # Preserves: Print Spooler, Windows Search, Windows Scan, WIA, WSL, VMware
 $ErrorActionPreference = 'SilentlyContinue'
@@ -27,10 +27,12 @@ $catDesc = @{
     '1' = 'Removes all Microsoft AI and Copilot components including app packages, ' +
           'Recall snapshots, Click to Do, Input Insights, and AI image generation in ' +
           'Paint/Photos/Snipping Tool. Disables Bing integration in Windows Search and ' +
-          'Copilot sidebar in Edge. Stops AI Fabric background services. ' +
+          'Copilot sidebar in Edge. Stops AI Fabric background services. On 26H2: disables ' +
+          'the new Settings AI Agent and removes AI Actions from File Explorer context menus. ' +
           'Tradeoffs: AI-powered features in built-in apps will stop working. ' +
-          'Bing web results will no longer appear in Windows Search. These changes ' +
-          'do not affect third-party apps or browsers.'
+          'Bing web results will no longer appear in Windows Search. The Settings app ' +
+          'will use classic search instead of the AI agent. These changes do not affect ' +
+          'third-party apps or browsers.'
 
     '2' = 'Stops and disables background services that consume CPU and RAM without benefiting ' +
           'most users: Xbox Live services, telemetry diagnostics, Windows Error Reporting, ' +
@@ -188,10 +190,10 @@ function Show-Banner {
     Write-Host ($cBlue + '  +=========================================================+' + $cReset)
     Write-Host ($cBlue + '  |' + $cReset + '                                                         ' + $cBlue + '|' + $cReset)
     Write-Host ($cBlue + '  |' + $cReset + '   ' + $cLtBlue + '####' + $cReset + '  ' + $cOrange + '####' + $cReset + '                                        ' + $cBlue + '|' + $cReset)
-    Write-Host ($cBlue + '  |' + $cReset + '   ' + $cLtBlue + '####' + $cReset + '  ' + $cOrange + '####' + $cReset + '   ' + $cWhite + $cBold + 'W I N O P T' + $cReset + '                      ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '   ' + $cLtBlue + '####' + $cReset + '  ' + $cOrange + '####' + $cReset + '   ' + $cWhite + $cBold + 'W I N O P T  v3.2' + $cReset + '                ' + $cBlue + '|' + $cReset)
     Write-Host ($cBlue + '  |' + $cReset + '                    ' + $cGrey + 'Windows 11 Optimizer' + $cReset + '               ' + $cBlue + '|' + $cReset)
     Write-Host ($cBlue + '  |' + $cReset + '   ' + $cYellow + '####' + $cReset + '  ' + $cRed + '####' + $cReset + '                                        ' + $cBlue + '|' + $cReset)
-    Write-Host ($cBlue + '  |' + $cReset + '   ' + $cYellow + '####' + $cReset + '  ' + $cRed + '####' + $cReset + '   ' + $cOrange + 'v3.1' + $cReset + $cDkGrey + ' | ' + $cGrey + '24H2/25H2' + $cDkGrey + ' | ' + $cGrey + 'Oct 2026' + $cReset + '   ' + $cBlue + '|' + $cReset)
+    Write-Host ($cBlue + '  |' + $cReset + '   ' + $cYellow + '####' + $cReset + '  ' + $cRed + '####' + $cReset + '   ' + $cOrange + 'v3.2' + $cReset + $cDkGrey + ' | ' + $cGrey + '24H2-26H2' + $cDkGrey + ' | ' + $cGrey + 'Oct 2026' + $cReset + '  ' + $cBlue + '|' + $cReset)
     Write-Host ($cBlue + '  |' + $cReset + '                    ' + $cDkGrey + 'AMD + NVIDIA Compatible' + $cReset + '            ' + $cBlue + '|' + $cReset)
     Write-Host ($cBlue + '  |' + $cReset + '                                                         ' + $cBlue + '|' + $cReset)
     Write-Host ($cBlue + '  +=========================================================+' + $cReset)
@@ -231,6 +233,12 @@ function Invoke-RemoveAICopilot {
     Set-RegistryValue 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer' 'DisableSearchBoxSuggestions' 1
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' 'BingSearchEnabled' 0
     Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' 'CortanaConsent' 0
+    # 26H2: Disable Settings AI Agent (replaces classic search in Settings)
+    Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsAI' 'DisableSettingsAgent' 1
+    # 26H2: Disable AI Actions in File Explorer context menu
+    Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsAI' 'DisableAIActionsInExplorer' 1
+    Set-RegistryValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' 'DisabledAIActions' 1
+    # Copilot in Edge
     Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Edge' 'HubsSidebarEnabled' 0
     Set-RegistryValue 'HKLM:\SOFTWARE\Policies\Microsoft\Edge' 'CopilotCDPPageContext' 0
     Disable-ServiceSafe 'AIFabricService'       'AI Fabric Service'
@@ -684,7 +692,7 @@ function Invoke-Main {
         Write-Host ($cBlue + '  ' + $cBold + 'Creating System Restore Point...' + $cReset)
         try {
             Enable-ComputerRestore -Drive ($env:SystemDrive + '\') -ErrorAction SilentlyContinue
-            Checkpoint-Computer -Description 'Pre-WinOpt-v3.1' -RestorePointType MODIFY_SETTINGS -ErrorAction Stop
+            Checkpoint-Computer -Description 'Pre-WinOpt-v3.2' -RestorePointType MODIFY_SETTINGS -ErrorAction Stop
             Write-Log 'Restore point created' 'SUCCESS'
         }
         catch {
